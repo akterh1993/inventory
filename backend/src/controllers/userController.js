@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const { successResponse } = require('../middlewares/responseHandler');
 const { findWithId } = require('../helper/findWithId');
 const { delateImage } = require('../helper/deleteImage');
+const createError = require('http-errors');
 
 const getUsers = async(req, res, next) =>{
     try {
@@ -97,4 +98,32 @@ const deleteUserById = async(req, res, next)=>{
     }
 };
 
-module.exports = { getUsers, getUserById, deleteUserById }
+const register = async(req, res, next) =>{
+    try {
+        const {name, email, mobile, password, address} = req.body;
+
+        const userExists = await User.exists({emai: email});
+
+        if (userExists) {
+            throw createError(409,'User Already Exist. Please Login Now!')
+            
+        }
+
+        const newUser = {
+            name,
+            email,
+            mobile,
+            password,
+            address,
+        };
+        return successResponse(res, {
+            statusCode:200,
+            message: 'User was Created Successfull',
+            payload: { newUser },
+        })
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { register, getUsers, getUserById, deleteUserById }

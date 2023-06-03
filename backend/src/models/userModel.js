@@ -1,6 +1,5 @@
 const {Schema, model} = require('mongoose');
 const  bcrypt  = require('bcrypt');
-const  defaultInage  = require('bcrypt');
 const config = require('../config/config');
 
 const imagePath = config.img.url;
@@ -28,14 +27,14 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minLength:[8, 'Minimum 8 Characters length'],
-        mmaxLength:[15, 'Minimum 15 Characters length'],
+        mmaxLength:[15, 'Maximum 15 Characters length'],
         set: (v)=> bcrypt.hashSync(v, bcrypt.genSaltSync(10)),
     },
     mobile: {
         type: String,
         required: true,
-        minLength:[11, 'Minimum 8 Characters length'],
-        mmaxLength:[11, 'Minimum 8 Characters length'],
+        minLength:[11, 'Minimum 11 Characters length'],
+        mmaxLength:[11, 'Minimum 11 Characters length'],
     },
     image: {
         type: String,

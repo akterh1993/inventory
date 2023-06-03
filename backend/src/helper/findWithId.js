@@ -8,7 +8,7 @@ const findWithId = async(Model, id, options ={})=>{
         
         const item = await Model.findById(id, options);
     
-        if (!item) { throw createError(404, `${Model.modelName}item Does not Exist  with This Id`);
+        if ( !item ) { throw createError(404, `${Model.modelName} item Does not Exist  with This Id`);
     
         }
         return item;
